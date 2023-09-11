@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit DMI</title>
+    <title>Insert DMI</title>
     <!-- favicon -->
     <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
     <!-- normalize -->
@@ -22,7 +22,7 @@
             
             <div class="form-control" style="margin-top: 20px;"> 
                 <label for="branchID" style="font-size: 17px;" >Enter Branch ID :</label>
-                <input type="text" name="branchID" class="dmi-input" id="" required  placeholder="Enter Branch ID">
+                <input type="text" name="branchID" class="dmi-input" placeholder="Enter Branch ID"  required maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');"  >
             </div>
             <button type="submit" class="block btn  branch-search-btn" style="margin-top: 30px;">Search</button>
 
@@ -38,27 +38,27 @@
                 <b style="font-size: 20px;" >Insert Details :</b>
                 <div class="form-control" style="margin-top: 20px;"> 
                     <label for="oldDmi" style="font-size: 17px;" >Old DMI :</label>
-                    <input type="text" name="oldDmi" class="oldDmi" id="" required placeholder="Copy Old DMI from above results">
+                    <input type="text" name="oldDmi" class="oldDmi" id="" required placeholder="Copy Old DMI from above results" maxlength="15">
                 </div>
                 <div class="form-control" style="margin-top: 20px;"> 
                     <label for="newDmi" style="font-size: 17px;" >New DMI :</label>
-                    <input type="text" name="newDmi" class="newDmi" id="" required placeholder="New DMI">
+                    <input type="text" name="newDmi" class="newDmi" id="" required placeholder="New DMI" maxlength="15">
                 </div>
                 <div class="form-control" style="margin-top: 20px;"> 
                     <label for="nameDmi" style="font-size: 17px;" >Name :</label>
-                    <input type="text" name="nameDmi" class="nameDmi" id="" required placeholder="Name">
+                    <input type="text" name="nameDmi" class="nameDmi" id="" required placeholder="Name" maxlength="40">
                 </div>
                 <div class="form-control" style="margin-top: 20px;"> 
-                    <label for="emailDmi" style="font-size: 17px;" >EMail  :</label>
-                    <input type="email" name="emailDmi" class="emailDmi" id="" required placeholder="EMail ">
+                    <label for="emailDmi" style="font-size: 17px;" >Email  :</label>
+                    <input type="email" name="emailDmi" class="emailDmi" id="" required placeholder="EMail " maxlength="40">
                 </div>
                 <div class="form-control" style="margin-top: 20px;"> 
-                    <label for="phoneNoDmi" style="font-size: 17px;" >Phone :</label>
-                    <input type="text" name="phoneNoDmi" class="phoneNoDmi" id="" required placeholder="Phone">
+                    <label for="phoneNoDmi" style="font-size: 17px;" >Phone :</label>   
+                    <input type="text" name="phoneNoDmi" class="phoneNoDmi" id="" required placeholder="Phone" minlength="10" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" >
                 </div>
                 <div class="form-control" style="margin-top: 20px;"> 
                     <label for="panDmi" style="font-size: 17px;" >PAN :</label>
-                    <input type="text" name="panDmi" class="panDmi" id="" required placeholder="PAN">
+                    <input type="text" name="panDmi" class="panDmi" id="" required placeholder="PAN" minlength="10" maxlength="10">
                 </div>
 
                 <button type="submit" style="margin-top: 20px;" class="block btn dmi-edit-btn">Submit</button>

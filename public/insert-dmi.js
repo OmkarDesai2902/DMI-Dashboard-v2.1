@@ -19,18 +19,30 @@ branchSearchButton.addEventListener('click',(event) => {
     event.preventDefault()
     checkS()
     const BranchID = dmiInputDOM.value
-    if(BranchID == '' || BranchID == 'null'){
+    if(BranchID == '' || BranchID == 'null' || BranchID.length <1){
         alert('Please Enter Branch ID')
         submitFormDOM.style.display = 'none'
-        showTextBox(BranchID)
+        // showTextBox(BranchID)
+        DmisDOM.innerHTML = ` <p> Enter valid Branch ID</p> `
+        dmiInputDOM.focus()
         return
     }
+    if(BranchID.length > 5){
+        alert('Only 5 digit allowed for Branch ID')
+        submitFormDOM.style.display = 'none'
+        // showTextBox(BranchID)
+        DmisDOM.innerHTML = ` <p> Enter 5 digit Branch ID</p> `
+        dmiInputDOM.focus()
+        return
+    }
+    
     
     showTextBox(BranchID)
     editBtnDOM.style.visibility = 'visible'
     submitFormDOM.style.display = 'block'
     insertFormDiv.style.display = 'block'
 })
+
 
 
 const showTextBox = async(BranchID) => {
@@ -103,16 +115,53 @@ submitFormDOM.addEventListener('submit', async (e) =>{
         let value = inputs[index].value
         insertObject = { ...insertObject, [name] : value }
     }
+    let oldPS_ID = insertObject.oldDmi
+    let newPS_ID = insertObject.newDmi
+    let phoneInput = insertObject.phoneNoDmi
+
+    //Phone Number 10 Digits validation
+    if(phoneInput.length !==10){
+        window.alert(`Only ${phoneInput.length} digits in Phone number. Please enter 10 digits`)
+        document.querySelector('.phoneNoDmi').focus()
+        return
+    }
+
+    console.log(newPS_ID)
 
     try {
-        if(confirm("Do yo want to Insert entered details")){
-            const insertAxios = axios.post(`/api/v1/dmis/`,insertObject)
-            window.alert("Insertion Successful");
-            window.location.href = `index.html`;
+        //Check if DMI present in MAS to replicate
+        const { data : { recordset }} = await axios.get(`/api/v1/dmis/${oldPS_ID}`)
+       
+        // Check if new DMI present in MAS already
+        const data1 = await axios.get(`/api/v1/dmis/${newPS_ID}`)
+        let newDmiArray = data1.data.recordsets[0]
+
+        //Check Old DMI does not exists recordset.length <1
+        if(recordset.length <1){
+            window.alert(`No FLS / DMIs in TBL_FLS_MASTER for mentioned Code__C : ${oldPS_ID} | Please Enter Old DMI from above results`)
+            document.querySelector('.oldDmi').focus()
+            return
         }
-        else{
-            //dialogue box cancel
+
+        //Check New DMI does exists already or not
+        if(newDmiArray.length >= 1) {
+            window.alert(`FLS / DMI ${newPS_ID} already present in MAS | Please update existing records if required`)
+            document.querySelector('.newDmi').focus()
+            return
+
         }
+        //Proceed to insert data
+        else {
+            if(confirm("Do yo want to Insert entered details")){
+                const insertAxios = axios.post(`/api/v1/dmis/`,insertObject)
+                window.alert("Insertion Successful");
+                window.location.href = `index.html`;
+            }
+            else{
+                //dialogue box cancel
+            }
+        }
+        
     } catch (error) {
         DmisDOM.innerHTML = ` <p> Error : ${error} </p> `
     }
