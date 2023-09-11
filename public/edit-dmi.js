@@ -36,11 +36,16 @@ const showTasks = async () => {
             let individualKey = dmiObjectKeys[i]
             let individualValue = dmiObjectValues[i]
 
+
+            
+
+
+
             htmlFormString += 
             `
                 <div class="form-control">
                     <label for="${individualKey}">${individualKey}</label>
-                    <input type="text" name="${individualKey}" value="${individualValue}" class="task-edit-name" />
+                    <input type="text" name="${individualKey}" value="${individualValue}" class="task-edit-name" required />
                 </div>  
     
             `
