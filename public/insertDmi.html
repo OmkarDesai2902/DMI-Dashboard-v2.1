@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit DMI</title>
+    <!-- favicon -->
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+    <!-- normalize -->
+    <link rel="stylesheet" href="./normalize.css" />
+    <!-- main  -->
+    <link rel="stylesheet" href="./main.css" />
+</head>
+<body>
+    <div class="container">
+        <form class="search-dmi-form">
+            <!-- <div class="form-alert"></div> -->
+            <div class="form-control " style="grid-template-columns: 895px 1fr;">
+                <b class="dmi-edit-id">Search DMI by Branch ID</b>
+            </div>
+            
+            <div class="form-control" style="margin-top: 20px;"> 
+                <label for="branchID" style="font-size: 17px;" >Enter Branch ID :</label>
+                <input type="text" name="branchID" class="dmi-input" id="" required  placeholder="Enter Branch ID">
+            </div>
+            <button type="submit" class="block btn  branch-search-btn" style="margin-top: 30px;">Search</button>
+
+            <div class="">
+                <p class="loading-text-editpage" style="visibility: hidden;" >Loading...</p>
+                <div class="dmis" ></div>
+                
+            </div> 
+        </form>
+
+        <form class="single-dmi-form"> 
+            <div class="insert-form-div">
+                <b style="font-size: 20px;" >Insert Details :</b>
+                <div class="form-control" style="margin-top: 20px;"> 
+                    <label for="oldDmi" style="font-size: 17px;" >Old DMI :</label>
+                    <input type="text" name="oldDmi" class="oldDmi" id="" required placeholder="Copy Old DMI from above results">
+                </div>
+                <div class="form-control" style="margin-top: 20px;"> 
+                    <label for="newDmi" style="font-size: 17px;" >New DMI :</label>
+                    <input type="text" name="newDmi" class="newDmi" id="" required placeholder="New DMI">
+                </div>
+                <div class="form-control" style="margin-top: 20px;"> 
+                    <label for="nameDmi" style="font-size: 17px;" >Name :</label>
+                    <input type="text" name="nameDmi" class="nameDmi" id="" required placeholder="Name">
+                </div>
+                <div class="form-control" style="margin-top: 20px;"> 
+                    <label for="emailDmi" style="font-size: 17px;" >EMail  :</label>
+                    <input type="email" name="emailDmi" class="emailDmi" id="" required placeholder="EMail ">
+                </div>
+                <div class="form-control" style="margin-top: 20px;"> 
+                    <label for="phoneNoDmi" style="font-size: 17px;" >Phone :</label>
+                    <input type="text" name="phoneNoDmi" class="phoneNoDmi" id="" required placeholder="Phone">
+                </div>
+                <div class="form-control" style="margin-top: 20px;"> 
+                    <label for="panDmi" style="font-size: 17px;" >PAN :</label>
+                    <input type="text" name="panDmi" class="panDmi" id="" required placeholder="PAN">
+                </div>
+
+                <button type="submit" style="margin-top: 20px;" class="block btn dmi-edit-btn">Submit</button>
+            </div>
+            
+        </form>
+        <a href="./index.html" class="btn back-link">Back to Dashboard</a>
+    </div>
+
+</body>
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+crossorigin="anonymous"
+referrerpolicy="no-referrer"></script>
+<script src="./insert-dmi.js"></script>
+</html>

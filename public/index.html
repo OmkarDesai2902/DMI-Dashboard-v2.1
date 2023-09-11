@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- favicon -->
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+    <!-- font awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+    />
+    <!-- normalize css -->
+    <link rel="stylesheet" href="./normalize.css" />
+    <!-- main css -->
+    <link rel="stylesheet" href="./main.css" />
+    <title>MAS DB</title>
+</head>
+<body>
+
+    <div class="logout-div" style="position: fixed; top: 10px; right: 10px; " >
+        <button class="btn" id="logout-btn" style=" background-color: #DC4C64; color: #fff; "  >Logout</button>
+    </div>
+
+    <form class="dmi-form">
+        <h4>FLS / DMI Dashboard</h4>
+        <div class="form-control"> 
+            <input type="text" name="name" class="dmi-input" id="" required>
+            <button type="submit" class="btn submit-btn">Search</button>
+        </div>
+        <div style="display: flex; justify-content: center; align-items: center; margin-top: 20px;">
+            <a href="./insertDmi.html"> <input type="button" class="btn submit-btn" value="Add new DMI / FLS" > </a>
+        </div>
+        <div class="form-alert"></div>
+    </form>
+
+        
+    <section class="dmis-container">
+        <p class="loading-text">Loading...</p>
+        <div class="dmis" ></div>
+        <div class="dmisHrms" ></div>
+    </section> 
+   
+
+</body>
+    <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+    integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"></script>
+    <script src="./browser-app.js"></script>
+</html>

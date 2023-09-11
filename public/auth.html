@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- favicon -->
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+    <!-- font awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+    />
+    <!-- normalize css -->
+    <link rel="stylesheet" href="./normalize.css" />
+    <!-- main css -->
+    <link rel="stylesheet" href="./main.css" />
+    <title>MAS DB | Login</title>
+</head>
+<body>
+
+    <form class="user-login-form">
+        <div style="display: flex; justify-content: center; align-items: center; "> 
+            <h4>LOGIN</h4>
+        </div>
+        <div class="form-control"> 
+            <label for="username" style="font-size: 17px;" >Username :</label>
+            <input type="text" name="username" class="username"  required placeholder="Enter Username">
+            <!-- <button type="submit" class="btn submit-btn">Login</button> -->
+        </div>
+        <div class="form-control"> 
+            <label for="password" style="font-size: 17px;" >Password :</label>
+            <input type="password" name="password" class="password"  required placeholder="Enter Password">
+            <!-- <button type="submit" class="btn submit-btn">Login</button> -->
+        </div>
+        <div style="display: flex; justify-content: center; align-items: center; margin-top: 20px;">
+            <!-- <a href="./insertDmi.html"> <input type="button" class="btn submit-btn" value="Add new DMI / FLS" > </a> -->
+            <!-- <input type="button" class="btn submit-btn" value="Add new DMI / FLS" >  -->
+            <button type="submit" class="btn submit-btn">Login</button>
+        </div>
+        <div class="form-alert"></div>
+    </form>
+
+
+
+   
+   
+
+</body>
+    <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+    integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"></script>
+    <script src="./auth.js"></script>
+    
+</html>
