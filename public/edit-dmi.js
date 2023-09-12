@@ -63,7 +63,7 @@ const showTasks = async () => {
 
             // for mobile number only 10digits no spaces
             if(individualKey == 'Contact__c' || individualKey =='Mobile__c' ){
-                inputID = 'numberPatternID phoneNumberID'
+                inputID = 'numberPatternID'
                 minMaxLength = 'minlength="10" maxlength="10" '
             }
             // mail 
