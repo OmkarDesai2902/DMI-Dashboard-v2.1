@@ -36,25 +36,146 @@ const showTasks = async () => {
             let individualKey = dmiObjectKeys[i]
             let individualValue = dmiObjectValues[i]
 
+            let inputID = ''
+            let minMaxLength = ''
 
-            
+            //textAndNumberPattern No spaces handle
+            if(individualKey == 'Code__c' || individualKey == 'HR_Branch_ID' || individualKey == 'Ifsc_No' ){
+                inputID = 'textAndNumberPatternID'
+            }
+            //text no spaces handle
+            if(individualKey == 'Active_Status__c' || individualKey == 'Products__c'    ){
+                inputID = 'textPatternID'
+            }
+            //Capital text no spaces handle
+            if(individualKey == 'Products__c'   ){
+                inputID = 'capitalTextPatternID'
+            }
+            // text spaces handle
+            if(individualKey == 'Name__c'    ){
+                inputID = 'spacesTextPatternID'
+            }
+            //number no spaces handle
+            if(individualKey == 'Contact__c' || individualKey =='Mobile__c' ){
+                inputID = 'numberPatternID'
+                //minMaxLength = 'minlength="10" maxlength="10" '
+            }
 
+            // for mobile number only 10digits no spaces
+            if(individualKey == 'Contact__c' || individualKey =='Mobile__c' ){
+                inputID = 'numberPatternID phoneNumberID'
+                minMaxLength = 'minlength="10" maxlength="10" '
+            }
+            // mail 
+            if(individualKey == 'Email__c'    ){
+                inputID = 'emailPatternID'
+            }
+            //maxlength 17
+            if(individualKey == 'Code__c' ){
+                minMaxLength = 'minlength="1" maxlength="17" '
+            }
+            //maxlength 8
+            if(individualKey == 'Active_Status__c' ){
+                minMaxLength = 'minlength="1" maxlength="8" '
+            }
+            //maxlength 4
+            if(individualKey == 'Products__c' ){
+                minMaxLength = 'minlength="1" maxlength="4" '
+            }
+            //maxlength 45
+            if(individualKey == 'Name__c' ){
+                minMaxLength = 'minlength="1" maxlength="45" '
+            }
 
 
             htmlFormString += 
             `
                 <div class="form-control">
                     <label for="${individualKey}">${individualKey}</label>
-                    <input type="text" name="${individualKey}" value="${individualValue}" class="task-edit-name" required />
+                    <input type="text" name="${individualKey}" value="${individualValue}"  
+                    class="task-edit-name ${individualKey}" id="${inputID}" 
+                    ${minMaxLength}
+                    required />
                 </div>  
     
             `
+            
+
         }
+
+       
 
         
         
         dmiIDDOM.innerHTML = dmiObjectValues[0] + " Details :"
         DmisDOM.innerHTML = htmlFormString
+
+        //textAndNumberPattern No spaces handle
+        let  tAndNIdDOM = document.querySelectorAll("#textAndNumberPatternID")
+        tAndNIdDOM.forEach((cd) =>{
+            cd.addEventListener('input',()=>{
+                cd.value=cd.value.replace(/[^0-9,A-Z,a-z]/g,'');
+                //console.log(cd)
+            })
+        })
+
+        //textPattern no spaces textPatternID
+        let  tIdDOM = document.querySelectorAll("#textPatternID")
+        tIdDOM.forEach((cd) =>{
+            cd.addEventListener('input',()=>{
+                cd.value=cd.value.replace(/[^A-Z,a-z]/g,'');
+                //console.log(cd)
+            })
+        })
+        //spacesTextPatternID
+        let  sTIdDOM = document.querySelectorAll("#spacesTextPatternID")
+        sTIdDOM.forEach((cd) =>{
+            cd.addEventListener('input',()=>{
+                cd.value=cd.value.replace(/[^ ,A-Z,a-z]/g,'');
+                //console.log(cd)
+            })
+        })
+        //capitalTextPattern no spaces 
+        let  cTIdDOM = document.querySelectorAll("#capitalTextPatternID")
+        cTIdDOM.forEach((cd) =>{
+            cd.addEventListener('input',()=>{
+                //cd.value=cd.value.replace(/[^A-Z]/g,'');
+                var mailformat = /^\w+([\.-]?\w+)*@\w+$/;
+                if(cd.value.match(/^[A-Z]*$/)){
+                   
+                }
+                else{
+                    alert("Kindly enter capital letters only")
+                    cd.value=cd.value.replace(/[^A-Z]/g,'');
+                }
+                //console.log(cd)
+            })
+        })
+        
+        //mailPattern emailPatternID
+        // let  emDOM = document.querySelectorAll("#emailPatternID")
+        // emDOM.forEach((cd) =>{
+        //     cd.addEventListener('focusout',()=>{
+        //         var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        //         if(!cd.value.match(mailformat)){
+        //             alert("You have entered an invalid email address!");
+        //         }
+        //     })
+        // })
+
+        //numberPatternID no spaces
+        let  nIdDOM = document.querySelectorAll("#numberPatternID")
+        nIdDOM.forEach((cd) =>{
+            cd.addEventListener('input',()=>{
+                cd.value=cd.value.replace(/[^0-9]/g,'');
+                //console.log(cd)
+            })
+        })
+        
+
+
+
+
 
         let inputs = DmisDOM.getElementsByTagName('input');
 
@@ -140,3 +261,12 @@ const checkS = async () => {
 }
 
 checkS()
+
+
+//== 'Code__c'
+// function classCheck (){
+//     let  ClassDOM = document.getElementById("Code__c")
+    
+//     //console.log(ClassDOM)
+
+// }

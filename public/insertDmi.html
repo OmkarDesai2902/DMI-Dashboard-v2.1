@@ -38,15 +38,15 @@
                 <b style="font-size: 20px;" >Insert Details :</b>
                 <div class="form-control" style="margin-top: 20px;"> 
                     <label for="oldDmi" style="font-size: 17px;" >Old DMI :</label>
-                    <input type="text" name="oldDmi" class="oldDmi" id="" required placeholder="Copy Old DMI from above results" maxlength="15">
+                    <input type="text" name="oldDmi" class="oldDmi" id="" required placeholder="Copy Old DMI from above results" maxlength="15" oninput="this.value=this.value.replace(/[^0-9,A-Z,a-z]/g,'');">
                 </div>
                 <div class="form-control" style="margin-top: 20px;"> 
                     <label for="newDmi" style="font-size: 17px;" >New DMI :</label>
-                    <input type="text" name="newDmi" class="newDmi" id="" required placeholder="New DMI" maxlength="15">
+                    <input type="text" name="newDmi" class="newDmi" id="" required placeholder="New DMI" maxlength="15" oninput="this.value=this.value.replace(/[^0-9,A-Z,a-z]/g,'');" >
                 </div>
                 <div class="form-control" style="margin-top: 20px;"> 
                     <label for="nameDmi" style="font-size: 17px;" >Name :</label>
-                    <input type="text" name="nameDmi" class="nameDmi" id="" required placeholder="Name" maxlength="40">
+                    <input type="text" name="nameDmi" class="nameDmi" id="" required placeholder="Name" maxlength="40" oninput="this.value=this.value.replace(/[^ ,A-Z, a-z]/g,'');" >
                 </div>
                 <div class="form-control" style="margin-top: 20px;"> 
                     <label for="emailDmi" style="font-size: 17px;" >Email  :</label>
@@ -58,7 +58,7 @@
                 </div>
                 <div class="form-control" style="margin-top: 20px;"> 
                     <label for="panDmi" style="font-size: 17px;" >PAN :</label>
-                    <input type="text" name="panDmi" class="panDmi" id="" required placeholder="PAN" minlength="10" maxlength="10">
+                    <input type="text" name="panDmi" class="panDmi" id="" required placeholder="PAN" minlength="10" maxlength="10" oninput="this.value=this.value.replace(/[^0-9,A-Z,a-z]/g,'');">
                 </div>
 
                 <button type="submit" style="margin-top: 20px;" class="block btn dmi-edit-btn">Submit</button>

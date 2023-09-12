@@ -126,12 +126,14 @@ submitFormDOM.addEventListener('submit', async (e) =>{
         return
     }
 
-    console.log(newPS_ID)
+    //console.log(newPS_ID)
 
     try {
         //Check if DMI present in MAS to replicate
         const { data : { recordset }} = await axios.get(`/api/v1/dmis/${oldPS_ID}`)
-       
+        
+        
+
         // Check if new DMI present in MAS already
         const data1 = await axios.get(`/api/v1/dmis/${newPS_ID}`)
         let newDmiArray = data1.data.recordsets[0]
@@ -142,6 +144,7 @@ submitFormDOM.addEventListener('submit', async (e) =>{
             document.querySelector('.oldDmi').focus()
             return
         }
+       
 
         //Check New DMI does exists already or not
         if(newDmiArray.length >= 1) {
