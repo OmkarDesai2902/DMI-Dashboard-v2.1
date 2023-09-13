@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="./main.css" />
 </head>
 <body>
+    <div class="test-loader" >
+    </div>
     <div class="container">
         <form class="search-dmi-form">
             <!-- <div class="form-alert"></div> -->
@@ -22,7 +24,7 @@
             
             <div class="form-control" style="margin-top: 20px;"> 
                 <label for="branchID" style="font-size: 17px;" >Enter Branch ID :</label>
-                <input type="text" name="branchID" class="dmi-input" placeholder="Enter Branch ID"  required maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');"  >
+                <input type="text" name="branchID" class="dmi-input" placeholder="Enter Branch ID"  required maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');"  >
             </div>
             <button type="submit" class="block btn  branch-search-btn" style="margin-top: 30px;">Search</button>
 
@@ -46,7 +48,7 @@
                 </div>
                 <div class="form-control" style="margin-top: 20px;"> 
                     <label for="nameDmi" style="font-size: 17px;" >Name :</label>
-                    <input type="text" name="nameDmi" class="nameDmi" id="" required placeholder="Name" maxlength="40" oninput="this.value=this.value.replace(/[^ ,A-Z, a-z]/g,'');" >
+                    <input type="text" name="nameDmi" class="nameDmi" id="" required placeholder="Name" maxlength="45" oninput="this.value=this.value.replace(/[^ ,A-Z, a-z]/g,'');" >
                 </div>
                 <div class="form-control" style="margin-top: 20px;"> 
                     <label for="emailDmi" style="font-size: 17px;" >Email  :</label>

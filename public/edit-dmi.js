@@ -6,6 +6,7 @@ const editFormDOM = document.querySelector('.single-dmi-form')
 const editBtnDOM = document.querySelector('.dmi-edit-btn')
 const formAlertDOM = document.querySelector('.form-alert')
 
+const roundLoaderDOM = document.querySelector('.test-loader')
 
 const params = document.location.search
 const paramStr = new URLSearchParams(params).get('paramStr')
@@ -36,11 +37,11 @@ const showTasks = async () => {
             let individualKey = dmiObjectKeys[i]
             let individualValue = dmiObjectValues[i]
 
-            let inputID = ''
-            let minMaxLength = ''
+            let inputID = 'defaultID'
+            let minMaxLength = ' '
 
             //textAndNumberPattern No spaces handle
-            if(individualKey == 'Code__c' || individualKey == 'HR_Branch_ID' || individualKey == 'Ifsc_No' ){
+            if(individualKey == 'Code__c' || individualKey == 'HR_Branch_ID' || individualKey == 'Ifsc_No' || individualKey=='PAN' || individualKey=='FLS_TARGET' ){
                 inputID = 'textAndNumberPatternID'
             }
             //text no spaces handle
@@ -56,7 +57,7 @@ const showTasks = async () => {
                 inputID = 'spacesTextPatternID'
             }
             //number no spaces handle
-            if(individualKey == 'Contact__c' || individualKey =='Mobile__c' ){
+            if(individualKey == 'Contact__c' || individualKey =='Mobile__c' || individualKey=='BranchID'){
                 inputID = 'numberPatternID'
                 //minMaxLength = 'minlength="10" maxlength="10" '
             }
@@ -80,22 +81,25 @@ const showTasks = async () => {
             }
             //maxlength 4
             if(individualKey == 'Products__c' ){
-                minMaxLength = 'minlength="1" maxlength="4" '
+                minMaxLength = 'minlength="1" maxlength="12" '
             }
             //maxlength 45
             if(individualKey == 'Name__c' ){
                 minMaxLength = 'minlength="1" maxlength="45" '
             }
-
+            //maxlength 10
+             if(individualKey == 'PAN' ){
+                minMaxLength = 'minlength="10" maxlength="10" '
+            }
 
             htmlFormString += 
             `
                 <div class="form-control">
                     <label for="${individualKey}">${individualKey}</label>
-                    <input type="text" name="${individualKey}" value="${individualValue}"  
+                    <input type="text" required name="${individualKey}" value="${individualValue}"   
                     class="task-edit-name ${individualKey}" id="${inputID}" 
                     ${minMaxLength}
-                    required />
+                     />
                 </div>  
     
             `
@@ -107,7 +111,7 @@ const showTasks = async () => {
 
         
         
-        dmiIDDOM.innerHTML = dmiObjectValues[0] + " Details :"
+        dmiIDDOM.innerHTML = dmiObjectValues[0] + " Details (TBL_FLS_MASTER) :"
         DmisDOM.innerHTML = htmlFormString
 
         //textAndNumberPattern No spaces handle
@@ -140,12 +144,12 @@ const showTasks = async () => {
         cTIdDOM.forEach((cd) =>{
             cd.addEventListener('input',()=>{
                 //cd.value=cd.value.replace(/[^A-Z]/g,'');
-                var mailformat = /^\w+([\.-]?\w+)*@\w+$/;
+                //var mailformat = /^\w+([\.-]?\w+)*@\w+$/;
                 if(cd.value.match(/^[A-Z]*$/)){
                    
                 }
                 else{
-                    alert("Kindly enter capital letters only")
+                    alert("Kindly enter capital letters only in Products__c")
                     cd.value=cd.value.replace(/[^A-Z]/g,'');
                 }
                 //console.log(cd)
@@ -193,6 +197,7 @@ showTasks()
 editFormDOM.addEventListener('submit', async (e) => {
     
     e.preventDefault()
+    roundLoaderDOM.style.visibility = 'visible'
 
     var updateObject = {  }
 
@@ -205,39 +210,92 @@ editFormDOM.addEventListener('submit', async (e) => {
     }
 
     try {
-        if(confirm("Do yo want to Edit entered details")){
-            const updateAxios = axios.patch(`/api/v1/dmis/${paramStr}`,updateObject)
-            window.alert("Updation Successful");
-            window.location.href = `index.html`;
+        //mailPattern emailPatternID
+        let  emDOM = document.querySelector("#emailPatternID")
+        var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        
+        //Phone Number 10 Digits validation 'Contact__c' 'Mobile__c' 
+        let phoneInput1 = document.querySelector('.Contact__c')
+        let phoneInput2 = document.querySelector('.Mobile__c')
+
+        //console.log(phoneInput1.value.length)
+
+        //PAN should be 10 Handle:
+        let panInput = document.querySelector('.PAN')
+        console.log(panInput.value.length)
+
+        //Phone Number 10 Digits validation 'Contact__c' 'Mobile__c'
+        if(phoneInput1.value.length !==10 || phoneInput2.value.length !==10 ){
+            roundLoaderDOM.style.visibility = 'hidden'
+            if(phoneInput1.value.length !==10){
+                window.alert(`Only ${phoneInput1.value.length} digits in Contact__c. Please enter 10 digits`)
+                document.querySelector('.Contact__c').focus()
+                return
+            }
+            else{
+                window.alert(`Only ${phoneInput2.value.length} digits in Mobile__c. Please enter 10 digits`)
+                document.querySelector('.Mobile__c').focus()
+                return
+            }
+            
         }
-        else{
-            //dialogue box cancel
+        
+        // PAN should be 10 chars
+        else if(panInput.value.length !==10){
+            roundLoaderDOM.style.visibility = 'hidden'
+            window.alert(`Only ${panInput.value.length} characters in PAN. Please enter 10 characters`)
+            document.querySelector('.PAN').focus()
+            return
+        }
+    
+        //mailPattern emailPatternID
+        else if(!emDOM.value.match(mailformat)){
+            roundLoaderDOM.style.visibility = 'hidden'
+            alert("You have entered an invalid email address!");
+            document.querySelector('.Email__c').focus()
+            return
+        }
+        else {
+            if(confirm("Do yo want to Edit entered details")){
+                const updateAxios = axios.patch(`/api/v1/dmis/${paramStr}`,updateObject)
+                roundLoaderDOM.style.visibility = 'hidden'
+                window.alert("Updation Successful");
+                window.location.href = `index.html`;
+            }
+            else{
+                //dialogue box cancel
+                roundLoaderDOM.style.visibility = 'hidden'
+            }
         }
     } catch (error) {
         DmisDOM.innerHTML = ` <p> Error : ${error} </p> `
+        roundLoaderDOM.style.visibility = 'hidden'
     }
 
-    
+    roundLoaderDOM.style.visibility = 'hidden'
 
 })
 
 //Delete DMI 
 
 function dmiDeleteFunction() {
-
+    roundLoaderDOM.style.visibility = 'visible'
     try {
         if(confirm(`Do yo want to Delete ${dmiIDSearched}`)){
             const deleteAxios = axios.delete(`/api/v1/dmis/${paramStr}`)
+            roundLoaderDOM.style.visibility = 'hidden'
             window.alert(`${dmiIDSearched} Deleted Successfully`);
             window.location.href = `index.html`;
         }
         else{
             //dialogue box cancel
+            roundLoaderDOM.style.visibility = 'hidden'
         }
     } catch (error) {
         DmisDOM.innerHTML = ` <p> Error : ${error} </p> `
+        roundLoaderDOM.style.visibility = 'hidden'
     }
-
+    roundLoaderDOM.style.visibility = 'hidden'
 }
 
 

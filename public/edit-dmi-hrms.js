@@ -9,6 +9,7 @@ const params = document.location.search
 const paramStr = new URLSearchParams(params).get('paramStr')
 const dmiIDSearched = paramStr.split("/")[0]
 
+// const roundLoaderDOM = document.querySelector('.test-loader')
 
 // Show DMI Function
 
@@ -35,11 +36,51 @@ const showTasks = async () => {
             let individualKey = dmiObjectKeys[i]
             let individualValue = dmiObjectValues[i]
 
+            let inputID = 'defaultID'
+            let minMaxLength = ' '
+
+            //textAndNumberPattern No spaces handle
+            if(individualKey == 'PersonnelNumber'  ){
+                inputID = 'textAndNumberPatternID'
+            }
+            // text spaces handle
+            if(individualKey == 'Name'    ){
+                inputID = 'spacesTextPatternID'
+            }
+
+            //Capital text no spaces handle
+            if(individualKey == 'BusinessUnit'   ){
+                inputID = 'capitalTextSpacesPatternID'
+            }
+            // mail 
+            if(individualKey == 'EmailID'    ){
+                inputID = 'emailPatternID'
+            }
+            // for mobile number only 10digits no spaces
+            if(individualKey == 'MOBILENO' ){
+                inputID = 'numberPatternID'
+                minMaxLength = 'minlength="10" maxlength="10" '
+            }
+
+            //maxlength 17
+            if(individualKey == 'PersonnelNumber' ){
+                minMaxLength = 'minlength="1" maxlength="17" '
+            }
+            //maxlength 45
+            if(individualKey == 'Name' ){
+                minMaxLength = 'minlength="1" maxlength="45" '
+            }
+
+
+
             htmlFormString += 
             `
                 <div class="form-control">
                     <label for="${individualKey}">${individualKey}</label>
-                    <input type="text" name="${individualKey}" value="${individualValue}" class="task-edit-name" required />
+                    <input type="text" required name="${individualKey}" value="${individualValue}" 
+                    class="task-edit-name ${individualKey}" id=${inputID}  
+                    ${minMaxLength}
+                     />
                 </div>  
     
             `
@@ -47,8 +88,52 @@ const showTasks = async () => {
 
         
         
-        dmiIDDOM.innerHTML = dmiObjectValues[0] + " Details :"
+        dmiIDDOM.innerHTML =  dmiObjectValues[0] + " Details (TBL_HRMS_SAP_JOINING_DATA) :" 
         DmisDOM.innerHTML = htmlFormString
+
+        //textAndNumberPattern No spaces handle
+        let  tAndNIdDOM = document.querySelectorAll("#textAndNumberPatternID")
+        tAndNIdDOM.forEach((cd) =>{
+            cd.addEventListener('input',()=>{
+                cd.value=cd.value.replace(/[^0-9,A-Z,a-z]/g,'');
+                //console.log(cd)
+            })
+        })
+
+        //spacesTextPatternID
+        let  sTIdDOM = document.querySelectorAll("#spacesTextPatternID")
+        sTIdDOM.forEach((cd) =>{
+            cd.addEventListener('input',()=>{
+                cd.value=cd.value.replace(/[^ ,A-Z,a-z]/g,'');
+                //console.log(cd)
+            })
+        })
+
+        //capitalTextSpacesPatternID
+        let  sCTIdDOM = document.querySelectorAll("#capitalTextSpacesPatternID")
+        sCTIdDOM.forEach((cd) =>{
+            cd.addEventListener('input',()=>{
+                //cd.value=cd.value.replace(/[^ ,A-Z]/g,'');
+                if(cd.value.match(/^[A-Z]*$/)){
+                   
+                }
+                else{
+                    alert("Kindly enter capital letters only in BusinessUnit")
+                    cd.value=cd.value.replace(/[^ ,A-Z]/g,'');
+                }
+                //console.log(cd)
+            })
+        })
+
+        //numberPatternID no spaces
+        let  nIdDOM = document.querySelectorAll("#numberPatternID")
+        nIdDOM.forEach((cd) =>{
+            cd.addEventListener('input',()=>{
+                cd.value=cd.value.replace(/[^0-9]/g,'');
+                //console.log(cd)
+            })
+        })
+
 
         let inputs = DmisDOM.getElementsByTagName('input');
         
@@ -78,14 +163,35 @@ editFormDOM.addEventListener('submit', async (e) => {
     
 
     try {
-        if(confirm("Do yo want to Edit entered details")){
-            const updateAxios = axios.patch(`/api/v1/dmis/${paramStr}`,updateObject)
-            window.alert("Updation Successful");
-            window.location.href = `index.html`;
+        //mailPattern emailPatternID
+        let  emDOM = document.querySelector("#emailPatternID")
+        var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+        //Phone Number 10 Digits validation 'MOBILENO'
+        let phoneInput1 = document.querySelector('.MOBILENO')
+        if(phoneInput1.value.length !==10){
+            window.alert(`Only ${phoneInput1.value.length} digits in Contact__c. Please enter 10 digits`)
+            document.querySelector('.MOBILENO').focus()
+            return
+        }
+
+        //mailPattern emailPatternID
+        else if(!emDOM.value.match(mailformat)){
+            alert("You have entered an invalid email address!");
+            document.querySelector('.EmailID').focus()
+            return
         }
         else{
-            //dialogue box cancel
+            if(confirm("Do yo want to Edit entered details")){
+                const updateAxios = axios.patch(`/api/v1/dmis/${paramStr}`,updateObject)
+                window.alert("Updation Successful");
+                window.location.href = `index.html`;
+            }
+            else{
+                //dialogue box cancel
+            }
         }
+        
     } catch (error) {
         DmisDOM.innerHTML = ` <p> Error : ${error} </p> `
     }

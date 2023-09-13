@@ -10,6 +10,7 @@ const formAlertDOM = document.querySelector('.form-alert')
 const dmiInputDOM = document.querySelector('.dmi-input')
 const branchSearchButton = document.querySelector('.branch-search-btn')
 const insertFormDiv = document.querySelector('.insert-form-div')
+const roundLoaderDOM = document.querySelector('.test-loader')
 
 
 insertFormDiv.style.display = 'none'
@@ -106,6 +107,7 @@ const showTextBox = async(BranchID) => {
 
 submitFormDOM.addEventListener('submit', async (e) =>{
     e.preventDefault()
+    roundLoaderDOM.style.visibility = 'visible'
     var insertObject = {  }
 
     let inputs = insertFormDiv.getElementsByTagName('input');
@@ -118,11 +120,20 @@ submitFormDOM.addEventListener('submit', async (e) =>{
     let oldPS_ID = insertObject.oldDmi
     let newPS_ID = insertObject.newDmi
     let phoneInput = insertObject.phoneNoDmi
+    let panInput = insertObject.panDmi
 
     //Phone Number 10 Digits validation
     if(phoneInput.length !==10){
+        roundLoaderDOM.style.visibility = 'hidden'
         window.alert(`Only ${phoneInput.length} digits in Phone number. Please enter 10 digits`)
         document.querySelector('.phoneNoDmi').focus()
+        return
+    }
+    //Phone Number 10 Digits validation
+    if(panInput.length !==10){
+        roundLoaderDOM.style.visibility = 'hidden'
+        window.alert(`Only ${panInput.length} characters in PAN. Please enter 10 characters`)
+        document.querySelector('.panDmi').focus()
         return
     }
 
@@ -140,6 +151,7 @@ submitFormDOM.addEventListener('submit', async (e) =>{
 
         //Check Old DMI does not exists recordset.length <1
         if(recordset.length <1){
+            roundLoaderDOM.style.visibility = 'hidden'
             window.alert(`No FLS / DMIs in TBL_FLS_MASTER for mentioned Code__C : ${oldPS_ID} | Please Enter Old DMI from above results`)
             document.querySelector('.oldDmi').focus()
             return
@@ -148,6 +160,7 @@ submitFormDOM.addEventListener('submit', async (e) =>{
 
         //Check New DMI does exists already or not
         if(newDmiArray.length >= 1) {
+            roundLoaderDOM.style.visibility = 'hidden'
             window.alert(`FLS / DMI ${newPS_ID} already present in MAS | Please update existing records if required`)
             document.querySelector('.newDmi').focus()
             return
@@ -157,6 +170,7 @@ submitFormDOM.addEventListener('submit', async (e) =>{
         else {
             if(confirm("Do yo want to Insert entered details")){
                 const insertAxios = axios.post(`/api/v1/dmis/`,insertObject)
+                roundLoaderDOM.style.visibility = 'hidden'
                 window.alert("Insertion Successful");
                 window.location.href = `index.html`;
             }
@@ -167,10 +181,11 @@ submitFormDOM.addEventListener('submit', async (e) =>{
         
     } catch (error) {
         DmisDOM.innerHTML = ` <p> Error : ${error} </p> `
+        roundLoaderDOM.style.visibility = 'hidden'
     }
 
 
-
+    roundLoaderDOM.style.visibility = 'hidden'
 })
 
 
