@@ -49,8 +49,14 @@ const showDmis = async (PS_ID) => {
                 for(let i=0; i<31; i++){
                     let individualKeyValue
                     individualKeyValue= values[i]+"/"
+                    if(values[i] == ''){
+                        individualKeyValue='empty'+'/'
+                    }
                     if(i==30){
                         individualKeyValue = values[i]
+                        if(values[i] == ''){
+                            individualKeyValue='empty'
+                        }
                     }
                     stringKeyValuesArray += individualKeyValue
                 }
@@ -112,8 +118,14 @@ const showDmisHrms = async (PS_ID) => {
                 for(let i=0; i<values.length; i++){
                     let individualKeyValue
                     individualKeyValue= values[i]+"/"
-                    if(i==30){
+                    if(values[i] == ''){
+                        individualKeyValue='empty'+'/'
+                    }
+                    if(i==values.length-1){
                         individualKeyValue = values[i]
+                        if(values[i] == ''){
+                            individualKeyValue='empty'
+                        }
                     }
                     stringKeyValuesArray += individualKeyValue
                 }

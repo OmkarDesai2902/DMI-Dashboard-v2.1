@@ -103,6 +103,12 @@ const getDmiInd = async (req,res) =>{
                 hQuery = "["+ x +"] IS NULL " 
             }
         }
+        else if(params[x] == "empty"){
+            hQuery = "["+ x +"] ='' AND "
+            if(x == "LastLogin_TimeStamp"){
+                hQuery = "["+ x +"] ='' "
+            }
+        }
         else{
             hQuery = "["+ x +"] ='"+params[x].toString()+"' AND "
             if(x == "LastLogin_TimeStamp"){
@@ -135,6 +141,12 @@ const getDmiIndHrms = async (req,res) =>{
             hQuery = "["+ x +"] IS NULL AND " 
             if(x == "MCCODE"){
                 hQuery = "["+ x +"] IS NULL " 
+            }
+        }
+        else if(params[x] == "empty"){
+            hQuery = "["+ x +"] ='' AND "
+            if(x == "MCCODE"){
+                hQuery = "["+ x +"] ='' "
             }
         }
         else{
@@ -189,6 +201,12 @@ const updateDmi = async (req,res) =>{
             hQuery =" ["+ x +"] IS NULL AND " 
             if(x == "LastLogin_TimeStamp"){
                 hQuery = " ["+ x +"] IS NULL "
+            }
+        }
+        else if(rParams[x] == "empty"){
+            hQuery = " ["+ x +"] = '' AND "
+            if(x == "LastLogin_TimeStamp"){
+                hQuery = " ["+ x +"] = '' "
             }
         }
         else{
@@ -247,6 +265,12 @@ const updateDmiHrms = async (req,res) =>{
                 hQuery = " ["+ x +"] IS NULL "
             }
         }
+        else if(rParams[x] == "empty"){
+            hQuery = " ["+ x +"] = '' AND "
+            if(x == "MCCODE"){
+                hQuery = " ["+ x +"] = '' "
+            }
+        }
         else{
             hQuery = " ["+ x +"] = '"+rParams[x].toString()+"' AND "
             if(x == "MCCODE"){
@@ -281,6 +305,12 @@ const deleteDmi = async (req,res) =>{
                 hQuery = "["+ x +"] IS NULL " 
             }
         }
+        else if(params[x] == "empty"){
+            hQuery = " ["+ x +"] = '' AND "
+            if(x == "LastLogin_TimeStamp"){
+                hQuery = " ["+ x +"] = '' "
+            }
+        }
         else{
             hQuery = "["+ x +"] ='"+params[x].toString()+"' AND "
             if(x == "LastLogin_TimeStamp"){
@@ -312,6 +342,12 @@ const deleteDmiHrms = async (req,res) =>{
             hQuery = "["+ x +"] IS NULL AND " 
             if(x == "MCCODE"){
                 hQuery = "["+ x +"] IS NULL " 
+            }
+        }
+        else if(params[x] == "empty"){
+            hQuery = " ["+ x +"] = '' AND "
+            if(x == "MCCODE"){
+                hQuery = " ["+ x +"] = '' "
             }
         }
         else{
