@@ -402,11 +402,20 @@ const createDmi = async (req,res) =>{
         (
         PersonnelNumber,Name,EmployeeSubgroup,PositionText,DateOfBirth,DateOfJoining,StrategicBusinessGroup,BusinessUnit,OrgUnit,PersonnelArea,BaseLocation,BaseLocationText,Gender,Job,EmailID,ZONE,STATE,STATECODE,ISPSNo,ISName,NSPSNo,NSName,DHPSNo,DHName,MOBILENO,MCCODE)
 
-        select top(1) @NewDMI,@Name,EmployeeSubgroup,PositionText,DateOfBirth,DateOfJoining,StrategicBusinessGroup,BusinessUnit,OrgUnit,PersonnelArea,BaseLocation,BaseLocationText,Gender,Job,@email,ZONE,STATE,STATECODE,ISPSNo,ISName,NSPSNo,NSName,DHPSNo,DHName,@mobile,MCCODE
-        from tbl_hrms_sap_joining_data where PersonnelNumber = @oldDMI;
+        select top(1) @NewDMI,@Name,NULL,NULL,NULL,NULL,NULL,Products__c,NULL,NULL,HR_Branch_ID,Branch_Name_C,NULL,NULL,@email,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,@mobile,NULL
+        from TBL_FLS_MASTER where code__c = @oldDMI;
     
     `
 
+    /* 
+    insert into tbl_hrms_sap_joining_data
+        (
+        PersonnelNumber,Name,EmployeeSubgroup,PositionText,DateOfBirth,DateOfJoining,StrategicBusinessGroup,BusinessUnit,OrgUnit,PersonnelArea,BaseLocation,BaseLocationText,Gender,Job,EmailID,ZONE,STATE,STATECODE,ISPSNo,ISName,NSPSNo,NSName,DHPSNo,DHName,MOBILENO,MCCODE)
+
+        select top(1) @NewDMI,@Name,EmployeeSubgroup,PositionText,DateOfBirth,DateOfJoining,StrategicBusinessGroup,BusinessUnit,OrgUnit,PersonnelArea,BaseLocation,BaseLocationText,Gender,Job,@email,ZONE,STATE,STATECODE,ISPSNo,ISName,NSPSNo,NSName,DHPSNo,DHName,@mobile,MCCODE
+        from tbl_hrms_sap_joining_data where PersonnelNumber = @oldDMI;
+
+    */
 
     
     try {
